@@ -1,5 +1,5 @@
 # BUILD STAGE
-FROM golang:1.16-alpine AS build
+FROM golang:1.19.8-alpine AS build
 
 ARG APP_VERSION="v5.0.0"
 ARG CGO=1
@@ -15,7 +15,7 @@ COPY . .
 RUN go build -v -a -tags 'netgo' -ldflags '-w -X 'main.Version=${APP_VERSION}' -extldflags "-static"' -o chaos cmd/chaos/*
 
 # FINAL STAGE
-FROM golang:1.16-alpine
+FROM golang:1.19.8-alpine
 RUN apk update && apk add --no-cache gcc g++
 
 MAINTAINER tiagorlampert@gmail.com
